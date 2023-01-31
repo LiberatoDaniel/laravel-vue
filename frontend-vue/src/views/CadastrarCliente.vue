@@ -1,6 +1,6 @@
 <template>
   <div>
-    cadastrar cliente
+    <h1> cadastrar cliente </h1>
   </div>
 </template>
 
