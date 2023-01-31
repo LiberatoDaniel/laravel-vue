@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,16 @@ export default new Vuex.Store({
   },
   actions: {
     addCliente(context, cliente) {
-      // ajax call
+      axios.post('http://localhost:8080/api/v1/clientes', cliente)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+          console.log('Finalizado');
+        });
 
 
       context.commit('ADD_CLIENTE', cliente);

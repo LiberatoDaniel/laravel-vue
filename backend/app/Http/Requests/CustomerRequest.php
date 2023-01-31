@@ -28,7 +28,7 @@ class CustomerRequest extends FormRequest
             'email'       => 'required|string|email|max:255|unique:customers',
             'street'      => 'required|string|max:255',
             'number_home' => 'required|string|max:255',
-            'complement'  => 'nullable|string|max:255',
+            'complement'  => 'required|string|max:255',
             'district'    => 'required|string|max:255',
             'city'        => 'required|string|max:255',
             'state'       => 'required|string|max:255',
