@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +15,10 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::resource('clientes', 'CustomerController');
+    Route::apiResources([
+        'clientes' => 'CustomerController',
+        'servicos' => 'ServiceController',
+    ]);
 });
 
 

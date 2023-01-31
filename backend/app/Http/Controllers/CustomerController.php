@@ -21,16 +21,6 @@ class CustomerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return JsonResponse
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  CustomerRequest  $request
@@ -51,21 +41,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function show($id)
+    public function show(Customer $customer)
     {
-        $customer = Customer::query()->findOrFail($id);
         return CustomerResource::make($customer);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return JsonResponse
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -91,9 +69,8 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        $customer = Customer::query()->findOrFail($id);
         $customer->delete();
         return CustomerResource::make($customer);
     }

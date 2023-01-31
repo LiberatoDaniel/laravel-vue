@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="mt-4"> CADASTRAR CLIENTE </h3>
-    <b-form class="mb-4" @submit="onSubmit" @reset="onReset">
+    <b-form class="mb-4" @submit="onSubmit">
 
       <b-form-group
           id="input-group-name"
