@@ -27,10 +27,14 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_CLIENTE(state, cliente) {
-        this.state.clientes.push(cliente);
+        state.clientes.push(cliente);
     },
     ADD_SERVICO(state, servico) {
-        this.state.servicos.push(servico);
+        state.servicos.push(servico);
+    },
+    SET_SERVICO(state, servico) {
+        let index = state.servicos.findIndex(item => item.id == servico.id);
+        state.servicos.splice(index, 1, servico);
     }
   },
   actions: {
@@ -78,6 +82,28 @@ export default new Vuex.Store({
                 alert(msgError)
             });
     },
+      editServico(context, servico) {
+            axios.put('http://localhost:8080/api/v1/servicos/' + servico.id, servico)
+                .then(response => {
+                    context.commit('SET_SERVICO', response.data.data);
+                    alert('Servico editado com sucesso!')
+                })
+                .catch(error => {
+                    let msgError = ''
+
+                    if(error.code == "ERR_BAD_REQUEST") {
+                        Object.keys(error.response.data.errors).forEach(key => {
+                            error.response.data.errors[key].forEach(msg => {
+                                msgError += '\n' + msg + '\n';
+                            });
+                        });
+                    } else {
+                        msgError = 'Ocorreu um erro inesperado !';
+                    }
+
+                    alert(msgError)
+                });
+      },
     getServicos() {
         axios.get('http://localhost:8080/api/v1/servicos')
             .then(response => {

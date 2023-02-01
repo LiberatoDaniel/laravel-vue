@@ -38,11 +38,12 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Service $service
+     * @param  int|string $id
      * @return JsonResponse
      */
-    public function show( Service $service)
+    public function show($id)
     {
+        $service = Service::query()->findOrFail($id);
         return ServiceResource::make($service);
     }
 
@@ -50,14 +51,16 @@ class ServiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Service             $service
+     * @param  int|string $id
      * @return JsonResponse
      */
-    public function update( ServiceRequest $request, Service $service)
+    public function update( ServiceRequest $request, $id)
     {
         $data = $request->validated();
 
+        $service = Service::query()->findOrFail($id);
         $service->update($data);
+        $service->refresh();
 
         return ServiceResource::make($service);
     }
@@ -66,10 +69,12 @@ class ServiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Service $service
+     * @param  int|string $id
      * @return JsonResponse
      */
-    public function destroy( Service $service)
+    public function destroy( Service $id)
     {
+        $service = Service::query()->findOrFail($id);
         $service->delete();
 
         return ServiceResource::make($service);

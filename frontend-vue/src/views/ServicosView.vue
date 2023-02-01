@@ -11,13 +11,30 @@
                 :sort-desc.sync="sortDesc"
                 responsive="sm"
             >
+              <template #cell(name)="data">
+                  <b-form-input v-if="data.index == serviceEdit.index && data.item.id == serviceEdit.id" v-model="serviceEdit.name" type="text" required placeholder="Digite o nome do serviço"></b-form-input>
+                  <div v-else>
+                    {{ data.item.name }}
+                  </div>
+              </template>
+
               <template #cell(active)="data">
-                <b-form-checkbox v-model="data.item.active" disabled></b-form-checkbox>
+                <div v-if="data.index == serviceEdit.index && data.item.id == serviceEdit.id">
+                  <b-form-checkbox v-model="serviceEdit.active"></b-form-checkbox>
+                </div>
+                <div v-else>
+                  <b-badge v-if="data.item.active" variant="success">Ativo</b-badge>
+                  <b-badge v-else variant="danger">Inativo</b-badge>
+                </div>
               </template>
 
               <template #cell(actions)="data">
-                <b-button variant="primary" class="mr-2" size="sm" @click="editTask(data.item, data.index)">Editar</b-button>
-                <b-button variant="danger" size="sm" @click="removeTask(data.item, data.index)">Deletar</b-button>
+                <span v-if="data.index == serviceEdit.index && data.item.id == serviceEdit.id" class="mr-2">
+                  <b-button variant="success" class="mr-2" @click="saveServiceEdit()" size="sm">Salvar</b-button>
+                  <b-button variant="outline-primary" size="sm" @click="cancelEditService()">Cancelar</b-button>
+                </span>
+                <b-button v-else variant="primary" class="mr-2" size="sm" @click="editService(data.item, data.index)">Editar</b-button>
+                <b-button variant="danger" size="sm" @click="removeService(data.item, data.index)">Deletar</b-button>
               </template>
             </b-table>
         </b-tab>
@@ -57,11 +74,17 @@ export default {
       sortBy: 'name',
       sortDesc: false,
       fields: [
-        { key: 'id', sortable: true },
-        { key: 'name', sortable: true },
+        { key: 'id', label: 'ID', sortable: true },
+        { key: 'name', label: 'Nome',sortable: true },
         { key: 'active', label: 'Ativo', sortable: true },
         { key: 'actions', label: 'Ações' },
       ],
+      serviceEdit: {
+        id: '',
+        index: '',
+        name: '',
+        active: false,
+      }
     }
   },
   mounted() {
@@ -88,6 +111,45 @@ export default {
         name: '',
         active: false,
       }
+    },
+    editService(item, index) {
+      this.serviceEdit = {
+        id: item.id,
+        index: index,
+        name: item.name,
+        active: item.active,
+      }
+    },
+    cancelEditService() {
+      this.serviceEdit = {
+        id: '',
+        index: '',
+        name: '',
+        active: false,
+      }
+    },
+    saveServiceEdit() {
+      if(this.serviceEdit.name == '') {
+        alert('O campo nome é obrigatório!')
+        return
+      }
+
+      this.$store.dispatch('editServico', this.serviceEdit)
+
+      this.serviceEdit = {
+        id: '',
+        index: '',
+        name: '',
+        active: false,
+      }
+    },
+    removeService(item, index) {
+      let dados = {
+        item,
+        index
+      }
+
+      this.$store.dispatch('removeServico', dados)
     }
   }
 }

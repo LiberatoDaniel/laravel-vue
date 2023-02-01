@@ -41,8 +41,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function show(Customer $customer)
+    public function show(Customer $id)
     {
+        $customer = Customer::query()->findOrFail($id);
         return CustomerResource::make($customer);
     }
 
@@ -69,8 +70,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function destroy(Customer $customer)
+    public function destroy(Customer $id)
     {
+        $customer = Customer::query()->findOrFail($id);
         $customer->delete();
         return CustomerResource::make($customer);
     }
