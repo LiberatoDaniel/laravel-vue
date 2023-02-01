@@ -20,13 +20,13 @@ cd html
 - copie o arquivo .env-xample para criar o .env
 ```
 cp .env.example .env
-php artisan key:generate
 ```
 - execute o composer install e rode as migrations
 ```
 composer install
 ```
 ```
+php artisan key:generate
 php artisan migrate
 ```
 - agora saia do container execute
