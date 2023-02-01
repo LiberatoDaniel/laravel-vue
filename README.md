@@ -19,7 +19,8 @@ cd html
 ```
 - copie o arquivo .env-xample para criar o .env
 ```
-cp .env-example .env
+cp .env.example .env
+php artisan key:generate
 ```
 - execute o composer install e rode as migrations
 ```
