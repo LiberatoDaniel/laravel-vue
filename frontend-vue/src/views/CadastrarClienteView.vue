@@ -70,7 +70,7 @@
             id="input-number_home"
             v-model="form.complement"
             type="text"
-            placeholder="Ex: 412"
+            placeholder="Ex: Bloco 12"
             required
         ></b-form-input>
       </b-form-group>
@@ -98,7 +98,7 @@
             id="input-city"
             v-model="form.city"
             type="text"
-            placeholder="Ex: São Paulo"
+            placeholder="Ex: Manaus"
             required
         ></b-form-input>
       </b-form-group>
@@ -112,7 +112,7 @@
             id="input-state"
             v-model="form.state"
             type="text"
-            placeholder="Ex: São Paulo"
+            placeholder="Ex: Amazonas"
             required
         ></b-form-input>
       </b-form-group>
