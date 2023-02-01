@@ -76,6 +76,15 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         $service = Service::query()->findOrFail($id);
+
+        if ($service->orderService()->count() > 0) {
+            return response()->json([
+                'errors' => [
+                    'message' => ['Não é possível excluir um serviço que está sendo usado em uma ordem de serviço.']
+                ]
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         $service->delete();
 
         return ServiceResource::make($service);
