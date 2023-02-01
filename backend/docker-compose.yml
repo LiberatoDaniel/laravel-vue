@@ -16,7 +16,9 @@ services:
       - sistemaapi
 
   php:
-    image: php:7.2-fpm
+    build:
+        context: .
+        dockerfile: Dockerfile
     container_name: php
     restart: always
     volumes:
