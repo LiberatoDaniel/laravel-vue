@@ -34,7 +34,7 @@
                   <b-button variant="outline-primary" size="sm" @click="cancelEditService()">Cancelar</b-button>
                 </span>
                 <b-button v-else variant="primary" class="mr-2" size="sm" @click="editService(data.item, data.index)">Editar</b-button>
-                <b-button variant="danger" size="sm" @click="removeService(data.item, data.index)">Deletar</b-button>
+                <b-button variant="danger" size="sm" @click="removeService(data.item)">Deletar</b-button>
               </template>
             </b-table>
         </b-tab>
@@ -143,13 +143,8 @@ export default {
         active: false,
       }
     },
-    removeService(item, index) {
-      let dados = {
-        item,
-        index
-      }
-
-      this.$store.dispatch('removeServico', dados)
+    removeService(item) {
+      this.$store.dispatch('removeServico', item)
     }
   }
 }

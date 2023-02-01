@@ -35,6 +35,10 @@ export default new Vuex.Store({
     SET_SERVICO(state, servico) {
         let index = state.servicos.findIndex(item => item.id == servico.id);
         state.servicos.splice(index, 1, servico);
+    },
+    DELETE_SERVICO(state, servico) {
+        let index = state.servicos.findIndex(item => item.id == servico.id);
+        state.servicos.splice(index, 1);
     }
   },
   actions: {
@@ -87,6 +91,28 @@ export default new Vuex.Store({
                 .then(response => {
                     context.commit('SET_SERVICO', response.data.data);
                     alert('Servico editado com sucesso!')
+                })
+                .catch(error => {
+                    let msgError = ''
+
+                    if(error.code == "ERR_BAD_REQUEST") {
+                        Object.keys(error.response.data.errors).forEach(key => {
+                            error.response.data.errors[key].forEach(msg => {
+                                msgError += '\n' + msg + '\n';
+                            });
+                        });
+                    } else {
+                        msgError = 'Ocorreu um erro inesperado !';
+                    }
+
+                    alert(msgError)
+                });
+      },
+      removeServico(context, servico) {
+            axios.delete('http://localhost:8080/api/v1/servicos/' + servico.id)
+                .then(response => {
+                    context.commit('DELETE_SERVICO', response.data.data)
+                    alert('Servico removido com sucesso!')
                 })
                 .catch(error => {
                     let msgError = ''

@@ -7,6 +7,7 @@ use App\Http\Resources\ServiceResource;
 use App\Service;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ServiceController extends Controller
 {
@@ -72,7 +73,7 @@ class ServiceController extends Controller
      * @param  int|string $id
      * @return JsonResponse
      */
-    public function destroy( Service $id)
+    public function destroy($id)
     {
         $service = Service::query()->findOrFail($id);
         $service->delete();
